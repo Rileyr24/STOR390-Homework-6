@@ -1,0 +1,47 @@
+---
+title: "HW 6"
+author: "Riley Richardson"
+date: "1/21/2024"
+output: 
+  html_document:
+    number_sections: true
+---
+
+#
+What is the difference between gradient descent and *stochastic* gradient descent as discussed in class?  (*You need not give full details of each algorithm.  Instead you can describe what each does and provide the update step for each.  Make sure that in providing the update step for each algorithm you emphasize what is different and why.*)
+
+The essential purpose of gradient descent is to find the input values that will return the global minimum of a given function. Stochastic gradient descent is a method for performing gradient descent that tests stochastic (i.e., random) values within a given range, decreases that range gradually and eventually converges on a local minimum (though not necessarily global) within that range.
+
+Gradient descent is performed with the following equation: $\theta_{n+1} = \theta_n - \alpha \nabla f(\theta_n,x,y)$ *where* $\theta$ represents the parameters of the function we're trying to minimize (i.e., $f(\theta, x, y)$ ), $x$ and $y$ represent data and $\alpha$ represents the learning rate, which controls how quickly we move toward the local minimum. Essentially the next value is determined by "moving" the parameter values from the current values in the direction which will most rapidly decrease the response variable. 
+
+Meanwhile, stochastic gradient descent is $\theta_{n+1} = \theta_i - \alpha \nabla f(\theta_i, x_i, y_i)$. Here $x_i$ and $y_i$ represent random samples of the data rather than all the data. 
+
+#
+Consider the `FedAve` algorithm.  In its most compact form we said the update step is $\omega_{t+1} = \omega_t - \eta \sum_{k=1}^K{\frac{n_k}{n}\nabla F_k(\omega_t)}$.  However, we also emphasized a more intuitive, yet equivalent, formulation given by $\omega_{t+1}^k=\omega_t-\eta\nabla F_k(\omega_t); w_{t+1} = \sum_{k=1}^K{\frac{n_k}{n}w_{t+1}^k}$.  
+
+Prove that these two formulations are equivalent.  
+(*Hint: show that if you place $\omega_{t+1}^k$ from the first equation (of the second formulation) into the second equation (of the second formulation), this second formulation will reduce to exactly the first formulation.*) 
+
+$w_{t+1} = \sum_{k=1}^K{\frac{n_k}{n}w_{t+1}^k}$
+
+$\omega_{t+1} = \sum_{k=1}^K \frac{n_k}{n} (\omega_t - \eta \nabla F(\omega_t))$
+
+$\omega_{t+1} = \sum_{k=1}^K \frac{n_k \omega_t}{n} - \frac{n_k}{n} \eta \nabla F(\omega_t)$
+
+$\omega_{t+1} = \frac{w_t}{n} \sum_{k=1}^K n_k - \eta \sum_{k=1}^K \frac{n_k}{n} \nabla F(\omega_t)$
+
+$\omega_{t+1} = \omega_t - \eta \sum_{k=1}^K \frac{n_k}{n} \nabla F(\omega_t)$
+
+#
+Now give a brief explanation as to why the second formulation is more intuitive.  That is, you should be able to explain broadly what this update is doing.  
+
+$\omega_{t+1}^k=\omega_t-\eta\nabla F_k(\omega_t)$ $w_{t+1} = \sum_{k=1}^K{\frac{n_k}{n}w_{t+1}^k}$
+
+The next values for the parameters of some function optimized for data in some silo $k$ are defined by performing gradient descent on those data; the values optimized for all data are then just the average of those values optimized for partitions of data weighted by the number of observations in those values' respective silos. 
+
+# 
+Explain how the harm principle places a constraint on personal autonomy.  Then, discuss whether the harm principle is *currently* applicable to machine learning models.  (*Hint: recall our discussions in the moral philosophy primer as to what grounds agency.  You should in effect be arguing whether ML models have achieved agency enough to limit the autonomy of the users of said algorithms.* )
+
+The harm principle dictates that one's autonomy should only be limited when it has the potential to cause harm to another moral agent. I do not believe that machine learning models have yet developed sufficient agency to require protections of autonomy. Machine learning models certainly do not suffer, so they are not agents under sentience definitions. Nor do they have any capacity for emotion or personal expression. One could perhaps argue that they express logic and thus could be agents under rationality definitions, but I disagree. A rational being would be able to acknowledge that (a) if Socrates is a man and (b) that all men are mortal, then they should intuit (c) that Socrates is mortal --- "if a and b are true, then must be true." But even if an LLM prints those words, it's not because it conception of "man" or "mortality," its merely predicting that "mortal" is more likely than not to appear after "Socrates is."
+
+In short, no current machine learning model *expresses* (they only *express* them) true sentience, emotion or rationality and therefore cannot be considered agents. Moreover, they have no autonomy to be protected.
